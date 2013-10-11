@@ -3,27 +3,24 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <title>My Amazing SoundCloud Catalog</title>
+    <title>The Sonora</title>
     <script src="http://connect.soundcloud.com/sdk.js"></script>
   </head>
 
   <body>
 
-    <h1>My Amazing SoundCloud Catalog</h1>
-    <button onClick="scrub()">Clear</button>
+    <h1>The Sonora</h1>
+
     <input type="text" id="search" onchange="doSearch()" />
 
     <div id="catalog">
-
     </div>
 
     <script>
       // SC.initialize({
       //   client_id: '1095f96607286f7aa1994f523a706996'
       // });
-      function scrub() {
-        var cat = document.getElementById("catalog").innerHTML = "";
-      };
+
       function doSearch() {
         var searchTerm = document.getElementById('search').value;
 
@@ -34,27 +31,13 @@
         var request = new XMLHttpRequest();
 
         request.onreadystatechange = function () {
-
           if (request.readyState === 4 && request.status === 200) {
-            var tracks = request.responseXML.children[0].children;
-            //for(track in tracks) {
-              for (var i = 0; i < tracks.length ; i ++ ){
-              var t = tracks[i];
-              if (t.getElementsByTagName("artwork-url")[0].childNodes[0]) {
-                var imgUrl = t.getElementsByTagName("artwork-url")[0].childNodes[0].nodeValue;
-                var img = document.createElement("img");
-                img.setAttribute("src", imgUrl);
-                var cat = document.getElementById("catalog");
-                cat.appendChild(img);
-              }
-              else {
-                continue;
-              }
+            var tracks = request.responseXML.children[1].children;
+            for(track in tracks) {
+              console.log(tracks[track]);
             }
           }
         };
-
-
         request.open('GET', 'http://api.soundcloud.com/tracks?client_id=1095f96607286f7aa1994f523a706996&q=' + searchTerm);
         request.send();
         // SC.get('/tracks', { q: searchTerm, license: 'cc-by-sa' }, function(tracks) {
@@ -63,7 +46,6 @@
         //   }
         // });
       };
-
     </script>
   </body>
 
