@@ -44,10 +44,16 @@
               if (t.getElementsByTagName("artwork-url")[0].childNodes[0]) {
                 var imgUrl = t.getElementsByTagName("artwork-url")[0].childNodes[0].nodeValue;
                 var imgDiv = document.createElement("div"); 
+                imgDiv.setAttribute("class", "img-div")
                 var img = document.createElement("img");
                 var popUpDiv = document.createElement("div");
+                var closeButton = document.createElement("b");
+                closeButton.setAttribute("class", "close-button")
+                closeButton.setAttribute("onClick", "closeModal(this)")
+                popUpDiv.appendChild(closeButton)
+                popUpDiv.setAttribute("class", "hidden")
                 img.setAttribute("src", imgUrl);
-                img.setAttribute("onClick", "infoPopUp()");
+                img.setAttribute("onClick", "infoPopUp(this)");
                 var cat = document.getElementById("catalog");
                 cat.appendChild(imgDiv);
                 imgDiv.appendChild(img);
@@ -67,7 +73,7 @@
                 }
                 if (t.getElementsByTagName("release-year")[0].childNodes[0]) {
                   var released = document.createElement("li");
-                  var releasedText = t.getElementsByTagName("release")[0].childNodes[0].nodeValue;
+                  var releasedText = t.getElementsByTagName("release-year")[0].childNodes[0].nodeValue;
                   released.innerHTML = releasedText;
                   list.appendChild(released);
                 }
@@ -94,9 +100,15 @@
         // });
       };
 
-      function infoPopUp(){
-        console.log("jam");
+      function infoPopUp(img){
+        popUpDiv = img.nextSibling;
+        popUpDiv.setAttribute("class", "modal-display")
       };
+
+      function closeModal(button) {
+        popUpDiv.parentNode;
+        popUpDiv.setAttribute("class", "hidden")
+      }
 
     </script>
   </body>
